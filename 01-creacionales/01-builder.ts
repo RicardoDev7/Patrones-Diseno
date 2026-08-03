@@ -1,3 +1,4 @@
+import { COLORS } from '../helpers/colors.ts';
 /**
  * ! Patrón Builder:
  * Es un patrón de diseño creacional que nos permite construir objetos complejos
@@ -20,7 +21,7 @@ class Computer {
     public gpu?: string;
 
     displayConfiguration(){
-        console.log(`Computer Configuration:
+        console.log(`
           CPU: ${this.cpu}
           RAM: ${this.ram}
           Storage: ${this.storage}
@@ -56,3 +57,22 @@ class ComputerBuilder {
         return this.computer;
     }
 }
+
+function main(){
+    const basicComputer = new ComputerBuilder()
+    .setCpu('Intel Core 2 Duo')
+    .setRam('4 GB')
+    .setStorage('256 GB').build();
+    console.log('%cComputer Configuration:', COLORS.red);
+    basicComputer.displayConfiguration();
+
+    const gamerComputer = new ComputerBuilder()
+    .setCpu('AMD Ryzen 9 5900X')
+    .setRam('64GB')
+    .setStorage('2TB')
+    .setGpu('NVIDIA RTX 5090X').build();
+    console.log('%cComputer Configuration:', COLORS.blue);
+    gamerComputer.displayConfiguration();
+}
+
+main();
