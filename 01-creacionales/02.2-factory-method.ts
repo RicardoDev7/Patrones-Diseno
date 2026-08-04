@@ -36,24 +36,32 @@ interface Report {
 
 class SalesReport implements Report {
   generate(): void {
-    throw new Error("Method not implemented.");
+    console.log('Generando reporte de ventas...');
   }
-  // TODO: implementar el método e imprimir en consola:
-  // 'Generando reporte de ventas...'
 }
 
 class InventoryReport implements Report {
   generate(): void {
-    throw new Error("Method not implemented.");
+    console.log('Generando reporte de inventario...');
   }
-  // TODO: implementar el método e imprimir en consola:
-  // 'Generando reporte de inventario...'
+}
+
+class AccountingReport implements Report {
+  generate(): void {
+    console.log('Generando reporte contable...');
+  }
+}
+
+class ManagementReport implements Report {
+  generate(): void {
+    console.log('Generando reporte de gestión...');
+  }
 }
 
 // 3. Clase Base ReportFactory con el Método Factory
 
 abstract class ReportFactory {
-  abstract createReport(): Report;
+  protected abstract createReport(): Report;
 
   generateReport(): void {
     const report = this.createReport();
@@ -64,14 +72,26 @@ abstract class ReportFactory {
 // 4. Clases Concretas de Fábricas de Reportes
 
 class SalesReportFactory extends ReportFactory {
-  createReport(): Report {
-    throw new Error('Method not implemented.');
+  override createReport(): Report {
+    return new SalesReport();
   }
 }
 
 class InventoryReportFactory extends ReportFactory {
-  createReport(): Report {
-    throw new Error('Method not implemented.');
+  override createReport(): Report {
+    return new InventoryReport();
+  }
+}
+
+class AccountingReportFactory extends ReportFactory {
+  override createReport(): Report {
+    return new AccountingReport();
+  }
+}
+
+class ManagementReportFactory extends ReportFactory {
+  override createReport(): Report {
+    return new ManagementReport();
   }
 }
 
@@ -80,16 +100,25 @@ class InventoryReportFactory extends ReportFactory {
 function main() {
   let reportFactory: ReportFactory;
 
-  const reportType = prompt(
-    '¿Qué tipo de reporte deseas? %c(sales/inventory)',
-    COLORS.red
-  );
+  const reportType = prompt('¿Qué tipo de reporte deseas? (sales/inventory/accounting/management)');
 
-  if (reportType === 'sales') {
-    reportFactory = new SalesReportFactory();
-  } else {
-    reportFactory = new InventoryReportFactory();
-  }
+  switch (reportType) {
+        case "sales":
+            reportFactory = new SalesReportFactory();
+            break;
+        case "inventory":
+            reportFactory = new InventoryReportFactory();
+            break;
+        case "accounting":
+            reportFactory = new AccountingReportFactory();
+            break;
+        case "management":
+            reportFactory = new ManagementReportFactory();
+            break;
+        default:
+            console.error("Tipo de reporte no válido");
+            return;
+    }
 
   reportFactory.generateReport();
 }
