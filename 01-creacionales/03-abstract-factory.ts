@@ -1,4 +1,5 @@
-import { COLORS } from './../helpers/colors';
+import { COLORS } from '../helpers/colors.ts';
+
 /**
  * ! Abstract Factory:
  * Es un patrón de diseño que permite crear familias de objetos relacionados
@@ -79,3 +80,16 @@ class HealthyRestaurantFactory implements RestaurantFactory {
   }
 
 }
+
+function main(factory: RestaurantFactory) : void {
+    const hamburger = factory.createHamburger();
+    const drink = factory.createDrink();
+    hamburger.prepare();
+    drink.prepare();
+}
+
+console.log('\n%cPedido de menú regular', COLORS.green);
+main(new FastFoodRestaurantFactory());
+
+console.log('\n\n%cPedido de menú saludable', COLORS.green);
+main(new HealthyRestaurantFactory());
