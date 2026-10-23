@@ -69,7 +69,7 @@ function main(){
     const gamerComputer = new ComputerBuilder()
     .setCpu('AMD Ryzen 9 5900X')
     .setRam('64GB')
-    .setStorage('2TB')
+    .setStorage('5TB')
     .setGpu('NVIDIA RTX 5090X').build();
     console.log('%cComputer Configuration:', COLORS.blue);
     gamerComputer.displayConfiguration();
