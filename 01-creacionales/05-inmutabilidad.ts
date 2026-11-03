@@ -1,4 +1,3 @@
-import { log } from "node:console";
 import { COLORS } from '../helpers/colors.ts';
 /**
  * ! Inmutabilidad con copia
