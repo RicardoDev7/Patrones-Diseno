@@ -1,3 +1,4 @@
+import { log } from "node:console";
 import { COLORS } from '../helpers/colors.ts';
 /**
  * ! Inmutabilidad con copia
@@ -50,6 +51,14 @@ class codeEditorHistory{
         this.currentIndex++;
     }
 
+    undo(): CodeEditorState | null {
+        if(this.currentIndex > 0){
+            this.currentIndex--;
+            return this.history[this.currentIndex];
+        }
+        return null;
+    }
+
     redo(): CodeEditorState | null {
         if(this.currentIndex < this.history.length - 1){
             this.currentIndex++;
@@ -58,3 +67,35 @@ class codeEditorHistory{
         return null;
     }
 }
+
+function main(){
+    const history = new codeEditorHistory();
+    let editorState = new CodeEditorState("console.log('Hola mundo')", 2, false);
+
+    history.save(editorState);
+    console.log('%cEstado inicial', COLORS.green);
+    editorState.displayState();
+
+    editorState = editorState.copyWith({ content: "console.log('Hola mundo') \nconsole.log('Nueva línea')", cursorPosition: 3, unSaveChanges: true });
+    history.save(editorState);
+
+    console.log('\n%cEstado después de la modificación', COLORS.green);
+    editorState.displayState();
+
+    editorState = editorState.copyWith({ cursorPosition: 5 });
+    history.save(editorState);
+
+    console.log('\n%cEstado después de mover el cursor', COLORS.green);
+    editorState.displayState();
+
+    console.log('\n%cEstado después de undo', COLORS.green);
+    editorState = history.undo()!;
+    editorState.displayState();
+
+    console.log('\n%cEstado después de redo', COLORS.green);
+    editorState = history.redo()!;
+    editorState.displayState();
+
+}
+
+main();
