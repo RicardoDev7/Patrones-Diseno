@@ -1,4 +1,3 @@
-import console from "node:console";
 import { COLORS } from '../helpers/colors.ts';
 /**
  * ! Singleton:
@@ -47,3 +46,19 @@ class DragonBalls {
     }
 }
 
+function main() : void {
+    const dragonBalls = DragonBalls.getInstance();
+    dragonBalls.collectBall();
+    dragonBalls.collectBall();
+    dragonBalls.collectBall();
+    dragonBalls.summonShenLong();
+
+    const dragonBalls2 = DragonBalls.getInstance();
+    dragonBalls2.collectBall();
+    dragonBalls.collectBall();
+    dragonBalls.collectBall();
+    dragonBalls.collectBall();
+    dragonBalls2.summonShenLong();
+}
+
+main();
